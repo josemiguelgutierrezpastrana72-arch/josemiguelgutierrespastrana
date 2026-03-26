@@ -1,51 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Fútbol Stats ⚽</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0b0f1a;
+  color: white;
+  text-align: center;
+}
+
+.match {
+  background: #111827;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px auto;
+  width: 300px;
+}
+
+.live {
+  color: red;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>⚽ Fútbol Stats</h1>
+
+<button onclick="actualizar()">Actualizar 🔄</button>
+
+<div id="matches"></div>
+
+<script>
+
 let matches = [
   {
     home: "Real Madrid",
     away: "Barcelona",
-    date: "Hoy - 7:00 PM",
-    score: "2 - 1",   // 👈 NUEVO (marcador)
-    possessionHome: 55,
-    possessionAway: 45,
-    penalties: "1 - 0",
+    date: "Hoy",
+    score: "2 - 1",
     status: "EN VIVO"
   },
   {
     home: "Liverpool",
     away: "Chelsea",
-    date: "Mañana - 3:00 PM",
+    date: "Mañana",
     score: "0 - 0",
-    possessionHome: 50,
-    possessionAway: 50,
-    penalties: "0 - 0",
     status: "PRÓXIMO"
   }
-];div.innerHTML = `
-  <h2>${match.home} vs ${match.away}</h2>
-  
-  <h1>⚽ ${match.score}</h1> <!-- 👈 MARCADOR GRANDE -->
+];
 
-  <p>📅 ${match.date}</p>
+function render() {
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
 
-  <p>📊 Posesión</p>
-  <div class="progress">
-    <div class="bar" style="width:${match.possessionHome}%"></div>
-  </div>
-  <small>${match.possessionHome}% - ${match.possessionAway}%</small>
+  matches.forEach(match => {
+    const div = document.createElement("div");
+    div.classList.add("match");
 
-  <p>⚽ Penales: ${match.penalties}</p>
+    div.innerHTML = `
+      <h2>${match.home} vs ${match.away}</h2>
+      <h1>⚽ ${match.score}</h1>
+      <p>📅 ${match.date}</p>
+      <p class="${match.status === 'EN VIVO' ? 'live' : ''}">
+        ${match.status}
+      </p>
+    `;
 
-  <p class="${match.status === 'EN VIVO' ? 'live' : ''}">
-    ${match.status}
-  </p>
-`;function actualizar() {
+    container.appendChild(div);
+  });
+}
+
+function actualizar() {
   matches.forEach(match => {
     if (match.status === "EN VIVO") {
-      
-      // posesión
-      match.possessionHome = Math.floor(Math.random() * 100);
-      match.possessionAway = 100 - match.possessionHome;
-
-      // marcador aleatorio
       let golesLocal = Math.floor(Math.random() * 5);
       let golesVisitante = Math.floor(Math.random() * 5);
       match.score = golesLocal + " - " + golesVisitante;
@@ -53,4 +85,12 @@ let matches = [
   });
 
   render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
 }
