@@ -1,0 +1,56 @@
+let matches = [
+  {
+    home: "Real Madrid",
+    away: "Barcelona",
+    date: "Hoy - 7:00 PM",
+    score: "2 - 1",   // 👈 NUEVO (marcador)
+    possessionHome: 55,
+    possessionAway: 45,
+    penalties: "1 - 0",
+    status: "EN VIVO"
+  },
+  {
+    home: "Liverpool",
+    away: "Chelsea",
+    date: "Mañana - 3:00 PM",
+    score: "0 - 0",
+    possessionHome: 50,
+    possessionAway: 50,
+    penalties: "0 - 0",
+    status: "PRÓXIMO"
+  }
+];div.innerHTML = `
+  <h2>${match.home} vs ${match.away}</h2>
+  
+  <h1>⚽ ${match.score}</h1> <!-- 👈 MARCADOR GRANDE -->
+
+  <p>📅 ${match.date}</p>
+
+  <p>📊 Posesión</p>
+  <div class="progress">
+    <div class="bar" style="width:${match.possessionHome}%"></div>
+  </div>
+  <small>${match.possessionHome}% - ${match.possessionAway}%</small>
+
+  <p>⚽ Penales: ${match.penalties}</p>
+
+  <p class="${match.status === 'EN VIVO' ? 'live' : ''}">
+    ${match.status}
+  </p>
+`;function actualizar() {
+  matches.forEach(match => {
+    if (match.status === "EN VIVO") {
+      
+      // posesión
+      match.possessionHome = Math.floor(Math.random() * 100);
+      match.possessionAway = 100 - match.possessionHome;
+
+      // marcador aleatorio
+      let golesLocal = Math.floor(Math.random() * 5);
+      let golesVisitante = Math.floor(Math.random() * 5);
+      match.score = golesLocal + " - " + golesVisitante;
+    }
+  });
+
+  render();
+}
